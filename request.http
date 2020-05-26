@@ -1,0 +1,27 @@
+@url = http://localhost:3000/api
+
+GET {{url}}/contacts
+
+###
+
+GET {{url}}/contact/1
+
+###
+
+POST {{url}}/contact HTTP/1.1
+content-type: application/json
+
+{
+  "name": "Anonymous",
+  "number": "123456789"
+}
+
+###
+
+PUT {{url}}/contact/1 HTTP/1.1
+content-type: application/json
+
+{
+  "name": "Random User",
+  "number": "23490812"
+}
