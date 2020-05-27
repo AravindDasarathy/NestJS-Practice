@@ -27,12 +27,17 @@ const phoneBook = [
         number: '3456'
     }
 ];
+const findIndex = (contactId) => phoneBook.findIndex(entry => entry.id === parseInt(contactId));
 let PhoneBookController = (() => {
     let PhoneBookController = class PhoneBookController {
         findAll() {
             return phoneBook;
         }
         findContact(contactId) {
+            const contactIndex = findIndex(contactId);
+            if (contactIndex === -1) {
+                throw new common_1.NotFoundException;
+            }
             return phoneBook.filter(entry => entry.id === parseInt(contactId))[0];
         }
         createContact(newContact) {
@@ -42,12 +47,23 @@ let PhoneBookController = (() => {
             return newCon;
         }
         updateContact(contactId, updateData) {
-            const updateIndex = phoneBook.findIndex(entry => entry.id === parseInt(contactId));
+            const updateIndex = findIndex(contactId);
             if (updateIndex === -1) {
                 throw new common_1.NotFoundException;
             }
             Object.assign(phoneBook[updateIndex], updateData);
             return phoneBook;
+        }
+        deleteContact(contactId) {
+            const deleteIndex = findIndex(contactId);
+            if (deleteIndex === -1) {
+                throw new common_1.NotFoundException;
+            }
+            phoneBook.splice(deleteIndex, 1);
+            return {
+                message: 'Contact deleted',
+                data: phoneBook
+            };
         }
     };
     __decorate([
@@ -77,6 +93,13 @@ let PhoneBookController = (() => {
         __metadata("design:paramtypes", [String, contact_dto_1.createContactDto]),
         __metadata("design:returntype", void 0)
     ], PhoneBookController.prototype, "updateContact", null);
+    __decorate([
+        common_1.Delete('contact/:contactId'),
+        __param(0, common_1.Param('contactId')),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [String]),
+        __metadata("design:returntype", void 0)
+    ], PhoneBookController.prototype, "deleteContact", null);
     PhoneBookController = __decorate([
         common_1.Controller('api')
     ], PhoneBookController);

@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body, Put, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, NotFoundException, Delete } from '@nestjs/common';
 import { createContactDto } from './contact.dto';
 // import { AppService } from './app.service';
 
@@ -15,6 +15,8 @@ const phoneBook: createContactDto[] = [
   }
 ];
 
+const findIndex = (contactId: string) => phoneBook.findIndex(entry => entry.id === parseInt(contactId));
+
 @Controller('api')
 export class PhoneBookController {
   @Get('contacts')
@@ -24,6 +26,12 @@ export class PhoneBookController {
 
   @Get('contact/:contactId')
   findContact(@Param('contactId') contactId): object {
+    const contactIndex = findIndex(contactId);
+
+    if (contactIndex === -1) {
+      throw new NotFoundException;
+    }
+
     return phoneBook.filter(entry => entry.id === parseInt(contactId))[0];
   }
 
@@ -38,7 +46,7 @@ export class PhoneBookController {
 
   @Put('contact/:contactId')
   updateContact(@Param('contactId') contactId: string, @Body() updateData: createContactDto) {
-    const updateIndex = phoneBook.findIndex(entry => entry.id === parseInt(contactId));
+    const updateIndex = findIndex(contactId);
 
     if (updateIndex === -1) {
       throw new NotFoundException;
@@ -46,5 +54,21 @@ export class PhoneBookController {
 
     Object.assign(phoneBook[updateIndex], updateData);
     return phoneBook;
+  }
+
+  @Delete('contact/:contactId')
+  deleteContact(@Param('contactId') contactId: string) {
+    const deleteIndex = findIndex(contactId);
+
+    if (deleteIndex === -1) {
+      throw new NotFoundException;
+    }
+
+    phoneBook.splice(deleteIndex, 1);
+
+    return {
+      message: 'Contact deleted',
+      data: phoneBook
+    };
   }
 };

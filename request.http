@@ -25,3 +25,7 @@ content-type: application/json
   "name": "Random User",
   "number": "23490812"
 }
+
+###
+
+DELETE {{url}}/contact/83 HTTP/1.1

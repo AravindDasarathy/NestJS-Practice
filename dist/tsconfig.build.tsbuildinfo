@@ -1142,8 +1142,8 @@
         "affectsGlobalScope": false
       },
       "../src/app.controller.ts": {
-        "version": "bba010858223f2cec07b4905e04b6682f95854c2ded2b15e0925dc604080c49e",
-        "signature": "41b374206f4b00d1219d60c73a99d0bbd8b55b622383d5da526c41f74ed6ea15",
+        "version": "60b5b46c4d8daeb1d44cfd84f2e15933442d93bdd417d4be41360cde89a3f297",
+        "signature": "f9864b6a2cc244ca199000b9f1ee1513544b1d661d593c9b5ae6d7705866ccf2",
         "affectsGlobalScope": false
       },
       "../src/app.service.ts": {
@@ -8900,6 +8900,8 @@
       "../node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "../node_modules/typescript/lib/lib.scripthost.d.ts",
       "../node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
+      "../src/app.controller.ts",
+      "../src/app.module.ts",
       "../src/app.service.ts",
       "../src/contact.dto.ts",
       "../src/main.ts"
